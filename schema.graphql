@@ -1,11 +1,119 @@
-type IDexRouter_SwapCompleted {
+type Positions_PositionExercised {
   id: ID!
-  inputToken: String!
-  amountIn: BigInt!
-  outputToken: String!
-  amountOutMin: BigInt!
-  amountOut:BigInt!
+  tokenId: BigInt!
+  trader: String!
+  amount: BigInt!
+  settlementAmount: BigInt!
 }
 
+type Positions_PositionOpened {
+  id: ID!
+  tokenId: BigInt!
+  trader: String!
+  premium: BigInt!
+  isLong: String!
+  isCall: String!
+}
 
+type Positions_PositionTest {
+  id: ID!
+  tokenId: BigInt!
+  trader: String!
+  currentTime: BigInt!
+  expiry: BigInt!
+  minDurationRes: BigInt!
+}
+
+type Positions__RoleAdminChanged {
+  id: ID!
+  role: Bytes!
+  previousAdminRole: Bytes!
+  newAdminRole: Bytes!
+}
+
+type Positions__RoleGranted {
+  id: ID!
+  role: Bytes!
+  account: String!
+  sender: String!
+}
+
+type Positions__RoleRevoked {
+  id: ID!
+  role: Bytes!
+  account: String!
+  sender: String!
+}
+
+type ERC20_Approval {
+  id: ID!
+  owner: String!
+  spender: String!
+  value: BigInt!
+}
+
+type ERC20_Transfer {
+  id: ID!
+  from: String!
+  to: String!
+  value: BigInt!
+}
+
+type NFT_Approval {
+  id: ID!
+  owner: String!
+  approved: String!
+  tokenId: BigInt!
+}
+
+type NFT_ApprovalForAll {
+  id: ID!
+  owner: String!
+  operator: String!
+  approved: Boolean!
+}
+
+type NFT_PositionOpened {
+  id: ID!
+  tokenId: BigInt!
+  trader: String!
+  positionType: BigInt!
+  amount: BigInt!
+  strikePrice: BigInt!
+}
+
+type NFT_PriceUpdated {
+  id: ID!
+  oldPrice: BigInt!
+  newPrice: BigInt!
+  updater: String!
+}
+
+type NFT_RoleAdminChanged {
+  id: ID!
+  role: Bytes!
+  previousAdminRole: Bytes!
+  newAdminRole: Bytes!
+}
+
+type NFT_RoleGranted {
+  id: ID!
+  role: Bytes!
+  account: String!
+  sender: String!
+}
+
+type NFT_RoleRevoked {
+  id: ID!
+  role: Bytes!
+  account: String!
+  sender: String!
+}
+
+type NFT_Transfer {
+  id: ID!
+  from: String!
+  to: String!
+  tokenId: BigInt!
+}
 

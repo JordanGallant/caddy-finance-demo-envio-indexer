@@ -1,13 +1,42 @@
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
-name: nadfun
+name: Positions-finance
 networks:
 - id: 10143
+  hypersync_config: 
+    url: "https://monad-testnet.hypersync.xyz/"
   start_block: 0
   contracts:
-  - name: IDexRouter
+  - name: Positions
     address:
-    - 0x82193139cCE644B32919d42ABf84A15D57B8aff6
+    - 0x14c17817F5De551db8dFC9071Af53BBE26C6Ff71
+    - 0xd026e90B490115CeE33c34f1aE56c23dD65b3B90
     handler: src/EventHandlers.ts
     events:
-    - event: SwapCompleted (address indexed inputToken,uint256 amountIn,address indexed outputToken,uint256 amountOutMin,uint256 indexed amountOut)
-raw_events: true
+    - event: PositionExercised(uint256 indexed tokenId, address indexed trader, uint256 amount, uint256 settlementAmount)
+    - event: PositionOpened(uint256 indexed tokenId, address indexed trader, uint256 premium, bool isLong, bool isCall)
+    - event: PostionTest(uint256 indexed tokenId, address indexed trader, uint256 currentTime, uint256 expiry, uint256 minDurationRes)
+    - event: RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)
+    - event: RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)
+    - event: RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)
+  - name: ERC20
+    address:
+    - 0x199c0Da6F291a897302300AAAe4F20d139162916
+    handler: src/EventHandlers.ts
+    events:
+    - event: Approval(address indexed owner, address indexed spender, uint256 value)
+    - event: Transfer(address indexed from, address indexed to, uint256 value)
+  - name: NFT
+    address:
+    - 0xF4cA0DC6b15F20E0B7d172746F3DeE98c9aB0Fb4
+    - 0xaC65Aa139370e3D50525AB24dfC534942968a62D
+    handler: src/EventHandlers.ts
+    events:
+    - event: Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)
+    - event: ApprovalForAll(address indexed owner, address indexed operator, bool approved)
+    - event: PositionOpened(uint256 indexed tokenId, address indexed trader, uint8 positionType, uint256 amount, uint256 strikePrice)
+    - event: PriceUpdated(uint256 oldPrice, uint256 newPrice, address updater)
+    - event: RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)
+    - event: RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)
+    - event: RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)
+    - event: Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
+
