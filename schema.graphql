@@ -1,3 +1,10 @@
+type Trader {
+  id: ID! # address
+  address: String!
+  positions: [Positions_PositionOpened!]! @derivedFrom(field: "trader")
+  nft: [NFT_PositionOpened!]! @derivedFrom(field: "trader")
+}
+
 type Positions_PositionExercised {
   id: ID!
   tokenId: BigInt!
@@ -11,8 +18,8 @@ type Positions_PositionOpened {
   tokenId: BigInt!
   trader: String!
   premium: BigInt!
-  isLong: String!
-  isCall: String!
+  isLong: Boolean!
+  isCall: Boolean!
 }
 
 type Positions_PositionTest {

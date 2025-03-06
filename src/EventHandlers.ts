@@ -4,6 +4,7 @@
 import {
   Positions,
   Positions_PositionExercised,
+  Positions_PositionOpened,
   ERC20,
   ERC20_Approval,
   ERC20_Transfer,
@@ -18,6 +19,18 @@ import {
   NFT_RoleAdminChanged
 } from "generated";
 
+const createTrader = async (address: string, context: any) => {
+  let trader = await context.Trader.get(address)
+
+  if (!trader) {
+     trader = {
+       id: address,
+       address: address,      
+     }
+     context.Trader.set(trader);
+  } 
+} 
+
 Positions.PositionExercised.handler(async ({ event, context }) => {
   const entity: Positions_PositionExercised = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
@@ -28,6 +41,20 @@ Positions.PositionExercised.handler(async ({ event, context }) => {
   };
 
   context.Positions_PositionExercised.set(entity);
+});
+
+Positions.PositionOpened.handler(async ({ event, context }) => {
+  const entity: Positions_PositionOpened = {
+    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+    tokenId: event.params.tokenId,
+    trader: event.params.trader,
+    premium: event.params.premium,
+    isLong: event.params.isLong,
+    isCall: event.params.isCall,
+  };
+
+  context.Positions_PositionOpened.set(entity);
+  await createTrader(event.params.trader, context);
 });
 
 ERC20.Approval.handler(async ({ event, context }) => {
@@ -86,6 +113,8 @@ NFT.PositionOpened.handler(async ({ event, context }) => {
   };
 
   context.NFT_PositionOpened.set(entity);
+
+  await createTrader(event.params.trader, context);
 });
 
 NFT.PriceUpdated.handler(async ({ event, context }) => {
